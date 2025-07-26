@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER CHAT // MATRIX TERMINAL</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="control close"></span>
+                    <span class="control minimize"></span>
+                    <span class="control maximize"></span>
+                </div>
+                <div class="terminal-title">CYBER CHAT v2.077</div>
+            </div>
+            <div class="terminal-content">
+                <div class="ascii-art">
+   ▄████▄▓██   ██▓ ▄▄▄▄   ▓█████  ██▀███  
+  ▒██▀ ▀█ ▒██  ██▒▓█████▄ ▓█   ▀ ▓██ ▒ ██▒
+  ▒▓█    ▄ ▒██ ██░▒██▒ ▄██▒███   ▓██ ░▄█ ▒
+  ▒▓▓▄ ▄██▒░ ▐██▓░▒██░█▀  ▒▓█  ▄ ▒██▀▀█▄  
+  ▒ ▓███▀ ░░ ██▒▓░░▓█  ▀█▓░▒████▒░██▓ ▒██▒
+  ░ ░▒ ▒  ░ ██▒▒▒ ░▒▓███▀▒░░ ▒░ ░░ ▒▓ ░▒▓░
+    ░  ▒  ▓██ ░▒░ ▒░▒   ░  ░ ░  ░  ░▒ ░ ▒░
+  ░       ▒ ▒ ░░   ░    ░    ░     ░░   ░ 
+  ░ ░     ░ ░      ░         ░  ░   ░     
+  ░       ░ ░           ░                 
+                </div>
+                <div class="login-form">
+                    <div class="input-group">
+                        <label>[USER_ID]</label>
+                        <input type="text" id="usernameInput" placeholder="Enter your handle..." maxlength="20">
+                    </div>
+                    <div class="username-preview" id="usernamePreview">
+                        <span class="preview-label">[PREVIEW]</span>
+                        <span class="preview-name" id="previewName">SAMPLE_USER</span>
+                    </div>
+                    <div class="menu-buttons">
+                        <button id="enterMatrixBtn" class="cyber-btn">
+                            <span class="btn-text">ENTER THE MATRIX</span>
+                            <span class="btn-effect"></span>
+                        </button>
+                        <button id="shopBtn" class="cyber-btn secondary">
+                            <span class="btn-text">EFFECTS SHOP</span>
+                            <span class="btn-effect"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Selection Screen -->
+    <div id="roomScreen" class="screen">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="control close"></span>
+                    <span class="control minimize"></span>
+                    <span class="control maximize"></span>
+                </div>
+                <div class="terminal-title">ROOM SELECTION // <span id="currentUser"></span></div>
+            </div>
+            <div class="terminal-content">
+                <div class="room-controls">
+                    <div class="input-group">
+                        <label>[ROOM_ID]</label>
+                        <input type="text" id="roomInput" placeholder="Create or join room..." maxlength="30">
+                    </div>
+                    <div class="control-buttons">
+                        <button id="joinRoomBtn" class="cyber-btn">
+                            <span class="btn-text">CONNECT</span>
+                            <span class="btn-effect"></span>
+                        </button>
+                        <button id="backToMenuBtn" class="cyber-btn secondary">
+                            <span class="btn-text">BACK TO MENU</span>
+                            <span class="btn-effect"></span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="rooms-list">
+                    <div class="section-title">[ACTIVE ROOMS]</div>
+                    <div id="roomsList" class="rooms-container">
+                        <div class="no-rooms">No active rooms found...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Screen -->
+    <div id="chatScreen" class="screen">
+        <div class="chat-container">
+            <div class="chat-header cyber-scan">
+                <div class="room-info">
+                    <span class="room-name glitch-text" id="currentRoom" data-text="LOADING...">LOADING...</span>
+                    <span class="user-count" id="userCount">0 users</span>
+                </div>
+                <div class="header-controls">
+                    <button id="emojiBtn" class="cyber-btn small">😀</button>
+                    <button id="commandBtn" class="cyber-btn small">CMD</button>
+                    <button id="leaveRoomBtn" class="leave-btn">DISCONNECT</button>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message system-message">
+                    <span class="timestamp">[SYSTEM]</span>
+                    <span class="content">Initializing secure connection...</span>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <div id="commandSuggestion" class="command-suggestion" style="display: none;">
+                    Available commands: /help /time /users /clear /status
+                </div>
+                <div class="input-group">
+                    <input type="text" id="messageInput" placeholder="Enter message or /command..." maxlength="500">
+                    <button id="sendBtn" class="send-btn">TRANSMIT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HUD Overlay -->
+    <div id="hudOverlay" class="hud-overlay hologram" style="display: none;">
+        <div class="hud-stat">
+            <span>CONNECTION:</span>
+            <span class="hud-value" id="connectionStatus">SECURE</span>
+        </div>
+        <div class="hud-stat">
+            <span>LATENCY:</span>
+            <span class="hud-value" id="latencyValue">0ms</span>
+        </div>
+        <div class="hud-stat">
+            <span>MESSAGES:</span>
+            <span class="hud-value" id="messageCount">0</span>
+        </div>
+        <div class="hud-stat">
+            <span>UPTIME:</span>
+            <span class="hud-value" id="uptimeValue">00:00</span>
+        </div>
+    </div>
+
+    <!-- Network Status -->
+    <div id="networkStatus" class="network-status connected">
+        <span>🔗 MATRIX LINK ACTIVE</span>
+    </div>
+
+    <!-- Effects Shop Modal -->
+    <div id="effectsShop" class="shop-modal" style="display: none;">
+        <div class="terminal-window shop-window">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="control close"></span>
+                    <span class="control minimize"></span>
+                    <span class="control maximize"></span>
+                </div>
+                <div class="terminal-title">CYBER EFFECTS MARKETPLACE</div>
+                <button id="closeShopBtn" class="leave-btn" style="padding: 5px 10px; font-size: 10px;">X</button>
+            </div>
+            <div class="terminal-content">
+                <div class="currency-display">
+                    <span class="currency-label">[CYBER_CREDITS]</span>
+                    <span class="currency-amount" id="userCredits">0</span>
+                    <span class="currency-icon">⚡</span>
+                </div>
+                
+                <div class="shop-categories">
+                    <button class="category-btn active" data-category="effects">USERNAME EFFECTS</button>
+                    <button class="category-btn" data-category="colors">COLOR SCHEMES</button>
+                    <button class="category-btn" data-category="animations">ANIMATIONS</button>
+                </div>
+
+                <div class="shop-items" id="shopItems">
+                    <!-- Items will be populated by JavaScript -->
+                </div>
+
+                <div class="equipped-effects">
+                    <div class="section-title">[EQUIPPED EFFECTS]</div>
+                    <div id="equippedList" class="equipped-list">
+                        <div class="no-effects">No effects equipped</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emoji Picker -->
+    <div id="emojiPicker" class="terminal-window" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2000; width: 300px;">
+        <div class="terminal-header">
+            <div class="terminal-title">EMOJI SELECTOR</div>
+            <button id="closeEmojiBtn" class="leave-btn" style="padding: 5px 10px; font-size: 10px;">X</button>
+        </div>
+        <div class="terminal-content">
+            <div class="emoji-grid" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; max-height: 200px; overflow-y: auto;">
+                <button class="emoji-item">😀</button><button class="emoji-item">😂</button><button class="emoji-item">😎</button>
+                <button class="emoji-item">🤖</button><button class="emoji-item">👾</button><button class="emoji-item">🔥</button>
+                <button class="emoji-item">⚡</button><button class="emoji-item">💀</button><button class="emoji-item">👍</button>
+                <button class="emoji-item">👎</button><button class="emoji-item">❤️</button><button class="emoji-item">💯</button>
+                <button class="emoji-item">🚀</button><button class="emoji-item">💎</button><button class="emoji-item">🎯</button>
+                <button class="emoji-item">🔮</button><button class="emoji-item">⭐</button><button class="emoji-item">✨</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="notification" preload="auto">
+        <source src="alarm.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
